@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello WelcomeController!{% endblock %}
+
+{% block container %}
+    <div class="articleDetail">
+        <h1>{{ camp.title }}</h1>
+        <br>
+        <h4>{{ camp.quote }}</h4>
+        <br>
+        <p>{{ camp.description }}</p>
+        <img style="width: 200px;" src="{{ camp.image }}" alt="{{ camp.title }} foto">
+        <button class="like">like</button>
+        <button class="dislike">dislike</button>
+    </div>
+    <div class="comment-container d-inline-block pl-3 align-top">
+            <h3> {{ totalreactions }}
+            {% if totalreactions <= 2 %}
+                reactie
+            {% else %}
+                reacties
+            {% endif %}
+            </h3>
+        <hr>
+        {{ form(form) }}
+        {% for reaction in reactions %}
+            <br>
+            <span class="commenter-name">Naam: {{ reaction.name }}</span>
+            <br>
+            <span class="comment">Reactie: {{ reaction.content }}</span>
+            <br>
+            <span>Geplaatst op: {{ reaction.date|date('m/d/Y H:i:s') }}</span>
+            <br>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        localStorage.setItem('phase', 'default');
+        let phase = localStorage.getItem('phase');
+        console.log(phase);
+
+        if(phase == 'liked'){
+            let button = document.querySelector('.like');
+            button.style.backgroundColor = 'green';
+            button.style.color = '#fff';
+        }
+        if(phase == 'dislike'){
+            let button = document.querySelector('.dislike');
+            button.style.backgroundColor = 'red';
+            button.style.color = '#fff';
+        }
+
+        $(document).on('click', 'button.like', function(){
+            that = $(this);
+            $.ajax({
+                url:'{{ (path('ajax-like')) }}',
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "phase": "liked"
+                },
+                async: true,
+                success: function (data)
+                {
+                    $result = data.output;
+                    localStorage.setItem('phase', $result);
+                    console.log(localStorage.getItem('phase'));
+                }
+            });
+            return false;
+
+        });
+        $(document).on('click', 'button.dislike', function(){
+            that = $(this);
+            $.ajax({
+                url:'{{ (path('ajax-dislike')) }}',
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "phase": "disliked"
+                },
+                async: true,
+                success: function (data)
+                {
+                    $result = data.output;
+                    localStorage.setItem('phase', $result);
+                    console.log(localStorage.getItem('phase'));
+                }
+            });
+            return false;
+
+        });
+    </script>
+{% endblock %}

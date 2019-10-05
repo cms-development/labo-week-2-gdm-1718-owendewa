@@ -1,0 +1,3 @@
+app_bundle_route:
+  path: /ajax_like
+  controller: AjaxController::like
