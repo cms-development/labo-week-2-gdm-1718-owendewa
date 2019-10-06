@@ -3,15 +3,22 @@
 {% block title %}Hello WelcomeController!{% endblock %}
 
 {% block container %}
-    <div class="articleDetail">
-        <h1>{{ camp.title }}</h1>
-        <br>
-        <h4>{{ camp.quote }}</h4>
-        <br>
-        <p>{{ camp.description }}</p>
-        <img style="width: 200px;" src="{{ camp.image }}" alt="{{ camp.title }} foto">
-        <button class="like">like</button>
-        <button class="dislike">dislike</button>
+    <div class="articleDetail clearfix">
+        <div class="articleDetailimage">
+            <img src="{{ camp.image }}" alt="{{ camp.title }} foto">
+        </div>
+        <div class="articleDetailtext">
+            <h1>{{ camp.title }}</h1>
+            <br>
+            <h4>{{ camp.quote }}</h4>
+            <br>
+            <p>{{ camp.description }}</p>
+            <div class="articleDetailbutton">
+                <button class="like btn btn-success">like</button>
+                <button class="dislike btn btn-danger">dislike</button>
+            </div>
+        </div>
+
     </div>
     <div class="comment-container d-inline-block pl-3 align-top">
             <h3> {{ totalreactions }}

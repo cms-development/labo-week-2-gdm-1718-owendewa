@@ -7,6 +7,23 @@ body {
 
 html {height:100%}
 
+.articleDetail{
+    max-width:1620px;
+    margin:0px auto;
+
+}
+.articleDetailimage img{
+    width:500px;
+    float:left;
+}
+.articleDetailtext{
+    float:left;
+    margin-left:20px;
+}
+.comment-container{
+    margin-top:20px;
+    margin-left:20px;
+}
 /* NAVIGATION */
 
 
